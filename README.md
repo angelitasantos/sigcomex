@@ -6,6 +6,15 @@ linux
 - python3 -m venv venv
 - source venv/bin/activate
 
+Front-end
+- Bootstrap
+
+Back-end
+- Python, Django
+
+Banco de Dados
+- PostgreSQL
+
 bibliotecas
 - pip install django
 - pip install pandas
