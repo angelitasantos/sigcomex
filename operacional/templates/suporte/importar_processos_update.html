@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
@@ -9,66 +8,67 @@
     <h2 class="text-center mb-3">Importar Dados</h2>
     {% include 'suporte/_breadcrumb_suporte.html' %}
 
-  <section class="my-5">
-    <h4>Importar Dados Alterados dos Processos</h4>
+    <section class="my-5">
+        <h4>Importar Dados Alterados dos Processos</h4>
 
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-success btn-sm px-5">Importar</button>
-    </form>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success btn-sm px-5">Importar</button>
+        </form>
 
-  </section>
+    </section>
 
-  <h4>Lista de Processos</h4>
+    <h4>Lista de Processos</h4>
 
-  {% include '_messages.html' %}
+    {% include '_messages.html' %}
 
-  <table class="table table-responsive table-hover table-sm">
+    <table class="table table-responsive table-hover table-sm">
 
-    <thead class="table-dark">
+        <thead class="table-dark">
 
-      <tr class="small">
-        <th>ID</th>
-        <th>Ref Siscomex</th>
-        <th>Ref Cliente</th>
-        <th>Data</th>
-        <th>Ano</th>
-        <th>Mês</th>
-        <th>Comex</th>
-        <th>Modal</th>
-        <th>Tipo</th>
-        <th>Saldo</th>
-        <th>CNPJ</th>
-        <th>Cod</th>
-        <th>Nome Fantasia</th>
-      </tr>
+            <tr class="small">
+                <th>ID</th>
+                <th>Ref Siscomex</th>
+                <th>Ref Cliente</th>
+                <th>Data</th>
+                <th>Ano</th>
+                <th>Mês</th>
+                <th>Comex</th>
+                <th>Modal</th>
+                <th>Tipo</th>
+                <th>Saldo</th>
+                <th>CNPJ</th>
+                <th>Cod</th>
+                <th>Nome Fantasia</th>
+            </tr>
 
-    </thead>
+        </thead>
 
-    <tbody class="table-sm">
+        <tbody class="table-sm">
 
-      {% for processo in processos %}
-      <tr class="small">
-        <th>{{ processo.id }}</th>
-        <th>{{ processo.codigo_processo }}</th>
-        <td>{{ processo.ref_cliente }}</td>
-        <td>{{ processo.data_processo|date:"d/m/Y" }}</td>
-        <td>{{ processo.ano_proc }}</td>
-        <td>{{ processo.mes_proc }}</td>
-        <td>{{ processo.get_comex_display }}</td>
-        <td>{{ processo.get_modal_display }}</td>
-        <td>{{ processo.get_tipo_display }}</td>
-        <td>{{ processo.get_saldo_display }}</td>
-        <td>{{ processo.cnpj }}</td>
-        <td>{{ processo.cliente_id }}</td>
-        <td>{{ processo.nomefantasia }}</td>
-      </tr>
+            {% for processo in processos %}
+            <tr class="small">
+                <th>{{ processo.id }}</th>
+                <th>{{ processo.codigo_processo }}</th>
+                <td>{{ processo.ref_cliente }}</td>
+                <td>{{ processo.data_processo|date:"d/m/Y" }}</td>
+                <td>{{ processo.ano_proc }}</td>
+                <td>{{ processo.mes_proc }}</td>
+                <td>{{ processo.get_comex_display }}</td>
+                <td>{{ processo.get_modal_display }}</td>
+                <td>{{ processo.get_tipo_display }}</td>
+                <td>{{ processo.get_saldo_display }}</td>
+                <td>{{ processo.cnpj }}</td>
+                <td>{{ processo.cliente_id }}</td>
+                <td>{{ processo.nomefantasia }}</td>
+            </tr>
 
-      {% endfor %}
+            {% endfor %}
 
-    </tbody>
-  </table>
+        </tbody>
+
+    </table>
 
 </main>
 {% endblock %}

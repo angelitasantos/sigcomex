@@ -7,6 +7,11 @@ from .forms import (ClienteForm, CategoriaForm, GrupoForm, ImportarDadosForm)
 from django.contrib import messages
 from django.db.models import Q
 import pandas as pd
+from django.core.paginator import (
+    Paginator,
+    EmptyPage,
+    PageNotAnInteger,
+)
 
 
 class HomepageTemplateView(TemplateView):
@@ -149,9 +154,20 @@ class ClienteView(View):
         if categoria:
             clientes = clientes.filter(categoria__id=categoria)
 
-        paginator = Paginator(clientes, 100)
+        default_page = 1
+        page = request.GET.get('page', default_page)
+        clientes_per_page = 25
+
+        paginator = Paginator(clientes, clientes_per_page)
         page_number = request.GET.get('page')
         clientes_page = paginator.get_page(page_number)
+
+        try:
+            clientes_page = paginator.page(page)
+        except PageNotAnInteger:
+            clientes_page = paginator.page(default_page)
+        except EmptyPage:
+            clientes_page = paginator.page(paginator.num_pages)
 
         return render(request, ClienteView.template_name, {
             'title': title,

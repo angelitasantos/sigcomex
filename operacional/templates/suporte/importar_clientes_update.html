@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
@@ -9,56 +8,56 @@
     <h2 class="text-center mb-3">Importar Dados</h2>
     {% include 'suporte/_breadcrumb_suporte.html' %}
 
-  <section class="my-5">
-    <h4>Importar Dados Alterados dos Clientes</h4>
+    <section class="my-5">
+        <h4>Importar Dados Alterados dos Clientes</h4>
 
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-success btn-sm px-5">Importar</button>
-    </form>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success btn-sm px-5">Importar</button>
+        </form>
 
-  </section>
+    </section>
 
-  <h4>Lista de Clientes</h4>
+    <h4>Lista de Clientes</h4>
 
-  {% include '_messages.html' %}
+    {% include '_messages.html' %}
 
-  <table class="table table-responsive table-hover table-sm">
+    <table class="table table-responsive table-hover table-sm">
 
-    <thead class="table-dark">
+        <thead class="table-dark">
 
-      <tr class="small">
-        <th>ID</th>
-        <th>Status</th>
-        <th>IMP</th>
-        <th>EXP</th>
-        <th>CNPJ</th>
-        <th>Insc Estadual</th>
-        <th>Nome Fantasia</th>
-        <th>Razão Social</th>
-      </tr>
+            <tr class="small">
+                <th>ID</th>
+                <th>Status</th>
+                <th>IMP</th>
+                <th>EXP</th>
+                <th>CNPJ</th>
+                <th>Insc Estadual</th>
+                <th>Nome Fantasia</th>
+                <th>Razão Social</th>
+            </tr>
 
-    </thead>
+        </thead>
 
-    <tbody class="table-sm">
+        <tbody class="table-sm">
 
-      {% for cliente in clientes %}
-      <tr class="small">
-        <td>{{ cliente.id }}</td>
-        <td>{{ cliente.status }}</td>
-        <td>{{ cliente.sigla_imp }}</td>
-        <td>{{ cliente.sigla_exp }}</td>
-        <td>{{ cliente.cnpj }}</td>
-        <td>{{ cliente.insc_est }}</td>
-        <td>{{ cliente.nome }}</td>
-        <td>{{ cliente.razao_social }}</td>
-      </tr>
-      {% endfor %}
+            {% for cliente in clientes %}
+            <tr class="small">
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.status }}</td>
+                <td>{{ cliente.sigla_imp }}</td>
+                <td>{{ cliente.sigla_exp }}</td>
+                <td>{{ cliente.cnpj }}</td>
+                <td>{{ cliente.insc_est }}</td>
+                <td>{{ cliente.nome }}</td>
+                <td>{{ cliente.razao_social }}</td>
+            </tr>
+            {% endfor %}
 
-    </tbody>
+        </tbody>
 
-  </table>
+    </table>
 
 </main>
 {% endblock %}
