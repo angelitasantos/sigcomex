@@ -1,0 +1,459 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<main class="container-fluid p-4 rounded shadow bg-white my-5">
+
+    <h2 class="text-center mb-3">Listagem de Clientes</h2>
+    {% include 'clientes/_breadcrumb_clientes.html' %}
+    {% include '_messages.html' %}
+
+    <button class="btn btn-primary btn-sm mb-3" data-toggle="modal" data-target="#createModal">Cadastrar Cliente</button>
+
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="modal-content">
+
+            <div class="modal-header bg-success">
+                <h5 class="modal-title">CRIAR NOVO CLIENTE</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                                                
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome Fantasia</label>
+                    {{ form.nome }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="razao_social" class="form-label">Razão Social</label>
+                    {{ form.razao_social }}
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        {{ form.cnpj }}
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label for="insc_est" class="form-label">Inscrição Estadual</label>
+                        {{ form.insc_est }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <label for="sigla_imp" class="form-label">Sigla Imp.</label>
+                        {{ form.sigla_imp }}
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label for="sigla_exp" class="form-label">Sigla Exp.</label>
+                        {{ form.sigla_exp }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <label for="grupo_id" class="form-label">Grupo</label>
+                        {{ form.grupo }}
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label for="categoria_id" class="form-label">Categoria</label>
+                        {{ form.categoria }}
+                    </div>
+                </div>                    
+
+            </div>
+            
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success btn-sm px-5" name="create">ADICIONAR</button>
+            </div>
+
+            </div>
+
+        </form>
+
+        </div>
+
+    </div>
+
+    <form method="POST" class="mb-3">
+        {% csrf_token %}
+        
+        <div class="row">
+
+            <div class="col-sm-4">
+                <input type="text" name="q" class="form-control form-control-sm" autocomplete="off"
+                placeholder="nome, razao_social, cnpj, sigla imp, sigla exp" value="{{ query }}">
+            </div>
+
+            <div class="col-sm-2">
+                <select name="status" class="form-control form-control-sm">
+                <option value="">Todos os Status</option>
+                <option value="A">Ativos</option>
+                <option value="I">Inativos</option>
+                </select>
+            </div>
+
+            <div class="col-sm-2">
+                <select name="grupo" class="form-control form-control-sm">
+                <option value="">Todas os Grupos</option>
+                {% for grupo in grupos %}
+                <option value="{{ grupo.id }}">{{ grupo.nome }}
+                </option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-sm-3">
+                <select name="categoria" class="form-control form-control-sm">
+                <option value="">Todas as Categorias</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nome }}
+                </option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-primary btn-sm" name="search">Filtrar</button>
+            </div>
+
+        </div>
+    </form>
+
+    <table class="table table-responsive table-hover table-sm">
+
+        <thead class="table-dark">
+    
+          <tr class="small">
+            <th scope="col">ID</th>
+            <th scope="col">S</th>
+            <th scope="col">Imp</th>
+            <th scope="col">Exp</th>
+            <th scope="col">Grupo</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">CNPJ</th>
+            <th scope="col">Nome Fantasia</th>
+            <th scope="col">Razão Social</th>
+            <th class="text-center" scope="col">Ações</th>
+          </tr>
+    
+        </thead>
+
+        <tbody class="table-sm">
+
+            {% for cliente in clientes %}
+            
+            <tr class="small">
+                <th style="width:60px">{{ cliente.id }}</th>
+                <td style="width:20px">{{ cliente.status }}</td>
+                <td style="width:50px">{{ cliente.sigla_imp }}</td>
+                <td style="width:50px">{{ cliente.sigla_exp }}</td>
+                <td style="width:50px">{{ cliente.grupo.nome }}</td>
+                <td style="width:50px">{{ cliente.categoria.nome }}</td>
+                <td style="width:160px">{{ cliente.cnpj }}</td>
+                <td style="width:260px">{{ cliente.nome }}</td>
+                <td>{{ cliente.razao_social }}</td>
+                <td class="text-center" style="width:120px">
+                    <a style="width:20px; height: 20px;" href="" data-bs-toggle="modal" data-bs-target="#updateModal_{{ cliente.id }}" 
+                        class="btn btn-sm btn-warning btn-sm mx-1"><i
+                        class="fa-regular fa-pen-to-square"></i></a>
+                    <a style="width:20px; height: 20px;" href="" data-bs-toggle="modal" data-bs-target="#processoModal_{{ cliente.id }}" 
+                        class="btn btn-sm btn-secondary btn-sm mx-1"><i
+                        class="fa-solid fa-globe"></i></a>
+                    <a style="width:20px; height: 20px;" href="" data-bs-toggle="modal" data-bs-target="#deletModal_{{ cliente.id }}" 
+                        class="btn btn-sm btn-danger btn-sm mx-1"><i
+                        class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+
+            <!-- update modal -->
+            <div class="modal fade" id="updateModal_{{ cliente.id }}" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateModal_{{ cliente.id }}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+
+                        <form action="" method="POST">
+                            {% csrf_token %}
+
+                            <div class="modal-content">
+                                <div class="modal-header bg-warning">
+                                    <h5 class="modal-title" id="updateModal_{{ cliente.id }}Label">ALTERAR CLIENTE</h5>
+                                </div>
+
+                                <div class="modal-body row">
+                                    <input type="hidden" name="id" value="{{ cliente.id }}">
+
+                                    <div class="row">
+
+                                        <div class="col-sm-12">
+                                          <label for="nome">Nome Fantasia</label>
+                                          <input required type="text" value="{{ cliente.nome }}" name="nome" class="form-control form-control-sm"
+                                            autocomplete="off">
+                                        </div>
+                            
+                                      </div>
+
+                                      <div class="row mt-3">
+                                        
+                                        <div class="col-sm-6">
+                                            <span>Grupo</span>
+                                            <select class="form-control form-control-sm" name="grupo_id">
+                                              <option value="{{ cliente.grupo }}">{{ cliente.grupo.nome }}</option>
+                                              {% for grupo in grupos %}
+                                              <option value="{{ grupo.id }}">{{ grupo.nome }}
+                                              </option>
+                                              {% endfor %}
+                                            </select>
+                                          </div>
+                            
+                                        <div class="col-sm-6">
+                                          <span>Categoria</span>
+                                          <select class="form-control form-control-sm" name="categoria_id">
+                                            <option value="{{ cliente.categoria }}">{{ cliente.categoria.nome }}</option>
+                                            {% for categoria in categorias %}
+                                            <option value="{{ categoria.id }}">{{ categoria.nome }}
+                                            </option>
+                                            {% endfor %}
+                                          </select>
+                                        </div>
+                            
+                                      </div>
+                            
+                                      <div class="mt-3 row">
+                                        <div class="col-sm-12">
+                                            <label for="razao_social">Razão Social</label>
+                                            <input required type="text" value="{{ cliente.razao_social }}" name="razao_social"
+                                            class="form-control form-control-sm" autocomplete="off">
+                                            </div>
+                                      </div>
+                            
+                                      <div class="row mt-3">
+                            
+                                        <div class="col-sm-4">
+                                          <label for="sigla_imp">Sigla IMP</label>
+                                          <input type="text" value="{{ cliente.sigla_imp }}" name="sigla_imp" class="form-control form-control-sm"
+                                            autocomplete="off">
+                                        </div>
+                            
+                                        <div class="col-sm-4">
+                                          <label for="sigla_exp">Sigla EXP</label>
+                                          <input type="text" value="{{ cliente.sigla_exp }}" name="sigla_exp" class="form-control form-control-sm"
+                                            autocomplete="off">
+                                        </div>
+                            
+                                        <div class="col-sm-4">
+                                          <span>Status</span>
+                                          <select class="form-control form-control-sm" name="status">
+                                            <option value="{{ cliente.status }}">{{ cliente.get_status_display }}</option>
+                                            <option value="A">ATIVO</option>
+                                            <option value="I">INATIVO</option>
+                                          </select>
+                                        </div>
+                            
+                                      </div>
+                            
+                                      <div class="row mt-3">
+                            
+                                        <div class="col-sm-6">
+                                          <label for="cnpj">CNPJ</label>
+                                          <input type="text" value="{{ cliente.cnpj }}" name="cnpj" class="form-control form-control-sm"
+                                            autocomplete="off">
+                                        </div>
+                            
+                                        <div class="col-sm-6">
+                                          <label for="insc_est">Insc. Est.</label>
+                                          <input type="text" value="{{ cliente.insc_est }}" name="insc_est"
+                                            class="form-control form-control-sm" autocomplete="off">
+                                        </div>
+                            
+                                      </div>
+                            
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-warning btn-sm px-5 mx-5" data-bs-dismiss="modal">CANCELAR</button>
+                                    <button type="submit" class="btn btn-success btn-sm px-5" name="update">ALTERAR</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+
+            <!-- delete modal -->
+            <div class="modal fade" id="deletModal_{{ cliente.id }}" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="deletModal_{{ cliente.id }}Label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ cliente.id }}">
+                        <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                            <h5 class="modal-title">EXCLUIR CLIENTE</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p class="mt-3">Você tem certeza que deseja deletar o cliente:</p>
+                            <p>{{ cliente.nome }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning btn-sm px-5 mx-5" data-bs-dismiss="modal">CANCELAR</button>
+                            <button type="submit" class="btn btn-danger btn-sm px-5" name="delete">EXCLUIR</button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- processo modal -->
+            <div class="modal fade" id="processoModal_{{ cliente.id }}" tabindex="-1"
+                aria-labelledby="processoModal_{{ cliente.id }}Label" aria-hidden="true">
+
+                <div class="modal-dialog">
+
+                    <form action="" method="post">
+                    {% csrf_token %}
+
+                    <div class="modal-content">
+                        <section class="modal-header">
+                        <h1 class="modal-title fs-5" id="processoModal_{{ cliente.id }}Label">Criar Novo Processo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </section>
+
+                        <section class="modal-body">
+                        <input type="hidden" name="id_cliente" value="{{ cliente.id }}">
+
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                            <label for="ref_cliente">Ref Cliente</label>
+                            <input type="text" value="" name="ref_cliente" autocomplete="off" class="form-control form-control-sm">
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+
+                            <div class="col-sm-4">
+                            <span>Comex</span>
+                            <select class="form-control form-control-sm" name="comex">
+                                <option value="I">IMPORTAÇÃO</option>
+                                <option value="E">EXPORTAÇÃO</option>
+                                <option value="O">OUTRO</option>
+                            </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                            <span>Modal</span>
+                            <select class="form-control form-control-sm" name="modal">
+                                <option value="M">MARITIMO</option>
+                                <option value="A">AEREO</option>
+                                <option value="R">RODOVIARIO</option>
+                                <option value="C">COURIER</option>
+                                <option value="P">POSTAL</option>
+                                <option value="O">OUTRO</option>
+                            </select>
+                            </div>
+
+                            <section class="col-sm-4">
+                            <span>Tipo</span>
+                            <select class="form-control form-control-sm" name="tipo">
+                                <option value="1">CONSUMO</option>
+                                <option value="2">REVENDA</option>
+                                <option value="3">NACIONALIZACAO</option>
+                                <option value="4">RECOF</option>
+                                <option value="5">DRAWBACK</option>
+                                <option value="6">AD TEMP</option>
+                                <option value="7">RET EXP TEMP</option>
+                                <option value="8">AGENCIAMENTO</option>
+                                <option value="9">FECHAMENTO</option>
+                                <option value="10">PRE ENTRY</option>
+                                <option value="11">INTERCOMPANY</option>
+                                <option value="12">DIRECT BUY</option>
+                                <option value="99">OUTRO</option>
+                            </select>
+                            </section>
+
+                        </div>
+
+                        <div class="row mt-3">
+
+                            <div class="col-sm-6">
+                            <label for="nome">Nome Fantasia</label>
+                            <input required type="text" value="{{ cliente.nome }}" name="nome" autocomplete="off"
+                                class="form-control form-control-sm">
+                            </div>
+
+                            <div class="col-sm-6">
+                            <label for="cnpj">CNPJ</label>
+                            <input type="text" value="{{ cliente.cnpj }}" name="cnpj" autocomplete="off"
+                                class="form-control form-control-sm">
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+
+                            <div class="col-sm-4">
+                            <label for="siglaimp">Sigla Importação</label>
+                            <input type="text" value="{{ cliente.siglaimp }}" name="siglaimp" autocomplete="off"
+                                class="form-control form-control-sm">
+                            </div>
+
+                            <div class="col-sm-4">
+                            <label for="siglaexp">Sigla Exportação</label>
+                            <input type="text" value="{{ cliente.siglaexp }}" name="siglaexp" autocomplete="off"
+                                class="form-control form-control-sm">
+                            </div>
+
+                            <section class="col-sm-4">
+                            <span>Saldo</span>
+                            <select class="form-control form-control-sm" name="saldo">
+                                <option value="P">PLENO</option>
+                                <option value="C">CLIENTE</option>
+                                <option value="S">SDA</option>
+                                <option value="O">OUTRO</option>
+                            </select>
+                            </section>
+
+                        </div>
+
+                        </section>
+
+                        <section class="modal-footer">
+                        <button type="button" class="btn btn-warning btn-sm px-4 mx-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success btn-sm px-4" name="processo">Criar Novo Processo</button>
+                        </section>
+
+                    </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    <div class="mt-5"></div>
+    {% include 'clientes/_breadcrumb_clientes.html' %}
+
+</main>
+
+{% endblock %}

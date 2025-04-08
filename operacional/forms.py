@@ -1,0 +1,80 @@
+from django import forms
+from .models import (Teste1Cliente, Teste1Categoria, Teste1Grupo)
+
+
+class ImportarDadosForm(forms.Form):
+    arquivo = forms.FileField()
+
+
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Teste1Categoria
+        fields = [
+            'nome']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update(
+                {'class': 'form-control form-control-sm', 'autocomplete': 'off'})
+
+
+class GrupoForm(forms.ModelForm):
+    class Meta:
+        model = Teste1Grupo
+        fields = [
+            'nome']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update(
+                {'class': 'form-control form-control-sm', 'autocomplete': 'off'})
+
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Teste1Cliente
+        fields = [
+            'nome', 'razao_social', 'cnpj', 'insc_est', 'sigla_imp',
+            'sigla_exp', 'status', 'grupo', 'categoria']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update(
+                {'class': 'form-control form-control-sm',
+                 'autocomplete': 'off'})
+
+    nome = forms.CharField(required=True)
+    razao_social = forms.CharField(required=True)
+    cnpj = forms.CharField(required=False)
+    insc_est = forms.CharField(required=False)
+    sigla_imp = forms.CharField(required=False)
+    sigla_exp = forms.CharField(required=False)
+
+    labels = {
+            'nome': 'Nome Fantasia',
+            'razao_social': 'Razão Social',
+            'cnpj': 'CNPJ',
+            'insc_est': 'Insc. Est.',
+            'sigla_imp': 'Sigla IMP.',
+            'sigla_exp': 'Sigla EXP.',
+            'status': 'Status',
+            'grupo': 'Grupo',
+            'categoria': 'Categoria',
+        }
+
+    grupo = forms.ModelChoiceField(
+        queryset=Teste1Grupo.objects.all(),
+        empty_label="Escolha um Grupo",
+        required=False,
+        widget=forms.Select(
+            attrs={'class': 'form-control form-control-sm'}))
+
+    categoria = forms.ModelChoiceField(
+        queryset=Teste1Categoria.objects.all(),
+        empty_label="Escolha uma Categoria",
+        required=False,
+        widget=forms.Select(
+            attrs={'class': 'form-control form-control-sm'}))

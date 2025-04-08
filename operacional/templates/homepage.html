@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<main class="homepage body">
+
+  <h3>.</h3>
+
+  <section class="container">
+
+    <div class="jumbotron">
+      <h1 class="display-4">Abertura de Processos</h1>
+      <hr class="my-1">
+      <p>...</p>
+      <a class="btn btn-primary btn-sm" href="{% url 'homepage' %}" role="button">Suporte</a>
+    </div>
+
+    <div class="row mt-5">
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Listagem de Clientes</h5>
+            <p class="card-text">...</p>
+            <div class="text-center">
+              <a href="{% url 'clientes' %}" class="btn btn-primary btn-sm mx-1">CLIENTES</a>
+              <a href="{% url 'categorias' %}" class="btn btn-warning btn-sm mx-1">CATEGORIAS</a>
+              <a href="{% url 'grupos' %}" class="btn btn-success btn-sm mx-1">GRUPOS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Listagem de Processos</h5>
+            <p class="card-text">...</p>
+            <a href="{% url 'homepage' %}" class="btn btn-primary btn-sm">Acessar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Importar Dados</h5>
+            <p class="card-text">...</p>
+            <a href="{% url 'homepage' %}" class="btn btn-primary btn-sm">Acessar</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</main>
+
+{% endblock %}
