@@ -27,6 +27,15 @@ class SuporteTemplateView(TemplateView):
         return context
 
 
+class OperacionalTemplateView(TemplateView):
+    template_name = 'operacional/operacional.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'OPERACIONAL'
+        return context
+
+
 class ImportarDadosView(TemplateView):
     template_name = 'suporte/importar_dados.html'
 

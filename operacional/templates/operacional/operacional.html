@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<main class="container p-4 rounded shadow bg-white my-5">
+
+  <h2 class="text-center mb-3">Operacional</h2>
+  {% include 'operacional/_breadcrumb_operacional.html' %}
+
+</main>
+{% endblock %}
