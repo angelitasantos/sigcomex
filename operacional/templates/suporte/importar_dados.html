@@ -11,55 +11,69 @@
 
     <div class="container">
 
-      <div class="row">
+        <div class="row">
 
-        <div class="col-sm-4">
-          <div class="card text-center">
-            <div class="card-header">
-              Importar Dados
+            <div class="col-sm-3">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Importar Dados
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Clientes</h5>
+                        <a href="{% url 'importarclientes' %}" class="btn btn-sm btn-success mx-3 px-5">Importar</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Arquivo Modelo
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-              <h5 class="card-title">Clientes</h5>
-              <a href="{% url 'importarclientes' %}" class="btn btn-sm btn-success mx-3 px-5">Importar</a>
+
+            <div class="col-sm-3">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Importar Dados
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Clientes Alterados</h5>
+                        <a href="{% url 'importarclientesalterados' %}" class="btn btn-sm btn-success mx-3 px-5">Importar</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Arquivo Modelo
+                    </div>
+                </div>
             </div>
-            <div class="card-footer text-muted">
-              Arquivo Modelo
+
+            <div class="col-sm-3">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Importar Dados
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Processos</h5>
+                        <a href="{% url 'importarprocessos' %}" class="btn btn-sm btn-success mx-3 px-5">Importar</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Arquivo Modelo
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <div class="col-sm-3">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Importar Dados
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Processos Alterados</h5>
+                        <a href="{% url 'importarprocessosalterados' %}" class="btn btn-sm btn-success mx-3 px-5">Importar</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Arquivo Modelo
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <div class="col-sm-4">
-          <div class="card text-center">
-            <div class="card-header">
-              Importar Dados
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Processos</h5>
-              <a href="{% url 'importarprocessos' %}" class="btn btn-sm btn-success mx-3 px-5">Importar</a>
-            </div>
-            <div class="card-footer text-muted">
-              Arquivo Modelo
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="card text-center">
-            <div class="card-header">
-              Importar Dados
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Processos Alterados</h5>
-              <a href="{% url 'importarprocessosalterados' %}" class="btn btn-sm btn-success mx-3 px-5">Importar
-                Alterações</a>
-            </div>
-            <div class="card-footer text-muted">
-              Arquivo Modelo
-            </div>
-          </div>
-        </div>
-
-      </div>
 
     </div>
 

@@ -34,7 +34,7 @@ class ProcessosTemplateView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'PROCESSOS'
         return context
-    
+
 
 class OperacionalTemplateView(TemplateView):
     template_name = 'operacional/operacional.html'
@@ -87,11 +87,24 @@ class ImportarClienteView(TemplateView):
                 'insc_est': row['insc_est'],
                 'sigla_imp': row['sigla_imp'],
                 'sigla_exp': row['sigla_exp'],
+                'serv_sigla_imp': row['serv_sigla_imp'],
+                'serv_sigla_exp': row['serv_sigla_exp'],
+                'cod_interno': row['cod_interno'],
+                'observacoes': row['observacoes'],
                 'grupo_id': row['grupo_id'],
                 'categoria_id': row['categoria_id'],
                 'status': row['status']
             }
         )
+
+
+class ImportarClienteAlteradoView(TemplateView):
+    template_name = 'suporte/importar_clientes_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'IMPORTAR CLIENTES ALTERADOS'
+        return context
 
 
 class ImportarProcessoView(TemplateView):
@@ -118,7 +131,7 @@ class ClienteView(View):
     def get(self, request):
         title = 'CLIENTES'
         form = ClienteForm()
-        clientes = Teste1Cliente.objects.all()
+        clientes = Teste1Cliente.objects.all().order_by('nome')
         grupos = Teste1Grupo.objects.all()
         categorias = Teste1Categoria.objects.all()
 
@@ -152,12 +165,19 @@ class ClienteView(View):
         })
 
     def post(self, request):
+        title = 'CLIENTES'
+        form = ClienteForm()
+
         nome = request.POST.get('nome')
         razao_social = request.POST.get('razao_social')
         cnpj = request.POST.get('cnpj')
         insc_est = request.POST.get('insc_est')
         sigla_imp = request.POST.get('sigla_imp')
         sigla_exp = request.POST.get('sigla_exp')
+        serv_sigla_imp = request.POST.get('serv_sigla_imp')
+        serv_sigla_exp = request.POST.get('serv_sigla_exp')
+        cod_interno = request.POST.get('cod_interno')
+        observacoes = request.POST.get('observacoes')
         grupo1 = request.POST.get('grupo_id')
         categoria1 = request.POST.get('categoria_id')
 
@@ -174,12 +194,16 @@ class ClienteView(View):
                 insc_est=insc_est,
                 sigla_imp=sigla_imp,
                 sigla_exp=sigla_exp,
+                serv_sigla_imp=serv_sigla_imp,
+                serv_sigla_exp=serv_sigla_exp,
+                cod_interno=cod_interno,
+                observacoes=observacoes,
                 status=status,
                 grupo_id=grupo,
                 categoria_id=categoria
             )
 
-            msg = f'Cliente {nome} Incluído com Sucesso !'
+            msg = f'Parceiro {nome} Incluído com Sucesso !'
             messages.success(request, msg)
             return redirect('clientes')
 
@@ -196,11 +220,15 @@ class ClienteView(View):
             cliente.insc_est = insc_est
             cliente.sigla_imp = sigla_imp
             cliente.sigla_exp = sigla_exp
+            cliente.serv_sigla_imp = serv_sigla_imp
+            cliente.serv_sigla_exp = serv_sigla_exp
+            cliente.cod_interno = cod_interno
+            cliente.observacoes = observacoes
             cliente.status = status
             cliente.grupo_id = grupo
             cliente.categoria_id = categoria
             cliente.save()
-            msg = f'Cliente {nome} Alterado com Sucesso !'
+            msg = f'Parceiro {nome} Alterado com Sucesso !'
             messages.success(request, msg)
             return redirect('clientes')
 
@@ -229,23 +257,27 @@ class ClienteView(View):
                     Q(cnpj__icontains=query) |
                     Q(sigla_imp__icontains=query) |
                     Q(sigla_exp__icontains=query) |
+                    Q(serv_sigla_imp__icontains=query) |
+                    Q(serv_sigla_exp__icontains=query) |
                     Q(razao_social__icontains=query)
                     )
 
             return render(request, ClienteView.template_name, {
+                'title': title,
                 'clientes': clientes,
                 'status': status,
                 'grupo': grupo,
                 'categoria': categoria,
                 'grupos': grupos,
-                'categorias': categorias
+                'categorias': categorias,
+                'form': form
             })
 
         elif request.method == 'POST' and 'delete' in request.POST:
             id = request.POST.get('id')
             cliente = get_object_or_404(Teste1Cliente, pk=id)
             # Teste1Cliente.objects.get(id=id).delete()
-            msg = f'Cliente {cliente.nome} Excluída com Sucesso !'
+            msg = f'Parceiro {cliente.nome} Excluído com Sucesso !'
             messages.success(request, msg)
             return redirect('clientes')
 
@@ -348,8 +380,3 @@ class GrupoView(View):
             msg = f'Grupo {grupo.nome} Excluído com Sucesso !'
             messages.success(request, msg)
             return redirect('grupos')
-
-    def delete(self, request, pk):
-        grupo = get_object_or_404(Teste1Grupo, pk=pk)
-        grupo.delete()
-        return redirect(GrupoView.template_name)
