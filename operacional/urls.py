@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (HomepageTemplateView, ClienteView, CategoriaView,
                     GrupoView, SuporteTemplateView, ImportarDadosView,
                     ImportarClienteView, ImportarProcessoView,
-                    ImportarProcessoAlteradoView, OperacionalTemplateView)
+                    ImportarProcessoAlteradoView, OperacionalTemplateView,
+                    ProcessosTemplateView)
 
 urlpatterns = [
     path('', HomepageTemplateView.as_view(), name='homepage'),
@@ -11,6 +12,7 @@ urlpatterns = [
     path('categorias/', CategoriaView.as_view(), name='categorias'),
     path('grupos/', GrupoView.as_view(), name='grupos'),
 
+    path('processos/', ProcessosTemplateView.as_view(), name='processos'),
     path('operacional/', OperacionalTemplateView.as_view(), name='operacional'),
 
     path('suporte/', SuporteTemplateView.as_view(), name='suporte'),
