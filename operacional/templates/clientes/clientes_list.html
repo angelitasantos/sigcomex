@@ -22,11 +22,11 @@
 
             <div class="col-sm-3">
                 <select name="categoria" class="form-control form-control-sm">
-                <option value="">Todas as Categorias</option>
-                {% for categoria in categorias %}
-                <option value="{{ categoria.id }}">{{ categoria.nome }}
-                </option>
-                {% endfor %}
+                    <option value="">Todas as Categorias</option>
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}">{{ categoria.nome }}
+                    </option>
+                    {% endfor %}
                 </select>
             </div>
 

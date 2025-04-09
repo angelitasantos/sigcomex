@@ -11,6 +11,61 @@ from django.core.paginator import (Paginator,
                                    PageNotAnInteger,
                                    )
 
+from django.http import HttpResponse
+from io import BytesIO
+
+MODELOS_DISPONIVEIS = {
+    'Clientes': Teste1Cliente,
+    'Categorias': Teste1Categoria,
+    'Grupos': Teste1Grupo,
+}
+
+
+def escolher_modelo_view(request):
+    if request.method == 'POST':
+        nome_modelo = request.POST.get('tabela')
+        modelo = MODELOS_DISPONIVEIS.get(nome_modelo)
+
+        if modelo is None:
+            return HttpResponse("Modelo inválido", status=400)
+
+        queryset = modelo.objects.all().values()
+        df = pd.DataFrame(list(queryset))
+
+        buffer = BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name=nome_modelo)
+        buffer.seek(0)
+        t = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+
+        response = HttpResponse(
+            buffer,
+            content_type=t
+        )
+        arquivo = f'attachment; filename="{nome_modelo}.xlsx"'
+        response['Content-Disposition'] = arquivo
+        return response
+
+    return render(request, 'exportar_excel.html')
+
+
+def exportar_excel_view(request):
+    queryset = Teste1Cliente.objects.all().values()
+    df = pd.DataFrame(list(queryset))
+    buffer = BytesIO()
+    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+        df.to_excel(writer, index=False, sheet_name='Dados')
+    buffer.seek(0)
+    tipo = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    response = HttpResponse(
+        buffer,
+        content_type=tipo
+    )
+    response[
+        'Content-Disposition'] = 'attachment; filename="dados.xlsx"'
+
+    return response
+
 
 class HomepageTemplateView(TemplateView):
     template_name = 'homepage.html'
@@ -46,6 +101,40 @@ class OperacionalTemplateView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'OPERACIONAL'
         return context
+
+
+class ExportarDadosView(TemplateView):
+    template_name = 'suporte/exportar_excel.html'
+
+    def get(self, request, *args, **kwargs):
+        title = 'EXPORTAR DADOS'
+        context = {'modelos': MODELOS_DISPONIVEIS.keys(), 'title': title}
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        nome_modelo = request.POST.get('tabela')
+        modelo = MODELOS_DISPONIVEIS.get(nome_modelo)
+
+        if modelo is None:
+            return HttpResponse("Modelo inválido", status=400)
+
+        queryset = modelo.objects.all().values()
+        df = pd.DataFrame(list(queryset))
+
+        buffer = BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name=nome_modelo)
+
+        buffer.seek(0)
+
+        t = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        response = HttpResponse(
+            buffer,
+            content_type=t
+        )
+        arquivo = f'attachment; filename="{nome_modelo}.xlsx"'
+        response['Content-Disposition'] = arquivo
+        return response
 
 
 class ImportarDadosView(TemplateView):

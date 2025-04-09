@@ -4,10 +4,14 @@ from .views import (HomepageTemplateView, ClienteView, CategoriaView,
                     ImportarClienteView, ImportarClienteAlteradoView,
                     ImportarProcessoView, ImportarProcessoAlteradoView,
                     OperacionalTemplateView, ProcessosTemplateView,
-                    ParceiroView)
+                    ParceiroView, exportar_excel_view, ExportarDadosView)
 
 urlpatterns = [
      path('', HomepageTemplateView.as_view(), name='homepage'),
+
+     path('exportarexcel/', exportar_excel_view, name='exportar_excel'),
+     path('exportardados/',
+          ExportarDadosView.as_view(), name='exportardados'),
 
      path('parceiros/', ParceiroView.as_view(), name='parceiros'),
      path('clientes/', ClienteView.as_view(), name='clientes'),
@@ -15,7 +19,8 @@ urlpatterns = [
      path('grupos/', GrupoView.as_view(), name='grupos'),
 
      path('processos/', ProcessosTemplateView.as_view(), name='processos'),
-     path('operacional/', OperacionalTemplateView.as_view(), name='operacional'),
+     path('operacional/',
+          OperacionalTemplateView.as_view(), name='operacional'),
 
      path('suporte/', SuporteTemplateView.as_view(), name='suporte'),
 

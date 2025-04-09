@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<main class="container p-4 rounded shadow bg-white my-5">
+
+    <h2 class="text-center mb-3">Exportar Dados</h2>
+    {% include 'suporte/_breadcrumb_suporte.html' %}
+
+    <div class="container my-5">
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <form method="POST">
+                {% csrf_token %}
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            Exportar Dados
+                        </div>
+                        <div class="card-body">
+                            <label for="tabela" class="mx-2">Escolha a tabela:</label>
+                            <select name="tabela" id="tabela" class="form-control form-control-sm">
+                                {% for modelo in modelos %}
+                                <option value="{{ modelo }}">{{ modelo }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <button type="submit" onclick="return confirm('Você tem certeza que deseja exportar ?')"
+                            class="btn btn-sm btn-primary px-4">EXPORTAR PARA EXCEL</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+{% endblock %}
