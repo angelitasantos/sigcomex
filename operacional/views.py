@@ -130,11 +130,11 @@ class ImportarProcessoAlteradoView(TemplateView):
         return context
 
 
-class ClienteView(View):
-    template_name = 'clientes/clientes_list.html'
+class ParceiroView(View):
+    template_name = 'clientes/parceiros_list.html'
 
     def get(self, request):
-        title = 'CLIENTES'
+        title = 'PARCEIROS'
         form = ClienteForm()
         clientes = Teste1Cliente.objects.all().order_by('nome')
         grupos = Teste1Grupo.objects.all()
@@ -169,7 +169,7 @@ class ClienteView(View):
         except EmptyPage:
             clientes_page = paginator.page(paginator.num_pages)
 
-        return render(request, ClienteView.template_name, {
+        return render(request, ParceiroView.template_name, {
             'title': title,
             'clientes': clientes_page,
             'categorias': categorias,
@@ -181,7 +181,7 @@ class ClienteView(View):
         })
 
     def post(self, request):
-        title = 'CLIENTES'
+        title = 'PARCEIROS'
         form = ClienteForm()
 
         nome = request.POST.get('nome')
@@ -296,6 +296,94 @@ class ClienteView(View):
             msg = f'Parceiro {cliente.nome} Excluído com Sucesso !'
             messages.success(request, msg)
             return redirect('clientes')
+
+
+class ClienteView(View):
+    template_name = 'clientes/clientes_list.html'
+
+    def get(self, request):
+        title = 'CLIENTES'
+        form = ClienteForm()
+        clientes = Teste1Cliente.objects.all().order_by('nome').filter(
+                status='A', grupo_id=3)
+        grupos = Teste1Grupo.objects.all()
+        categorias = Teste1Categoria.objects.all()
+
+        query = request.GET.get('q', '')
+        status = request.GET.get('status', '')
+        grupo = request.GET.get('grupo', '')
+        categoria = request.GET.get('categoria', '')
+
+        if status:
+            clientes = clientes.filter(status=status)
+
+        if grupo:
+            clientes = clientes.filter(grupo__id=grupo)
+
+        if categoria:
+            clientes = clientes.filter(categoria__id=categoria)
+
+        default_page = 1
+        page = request.GET.get('page', default_page)
+        clientes_per_page = 25
+
+        paginator = Paginator(clientes, clientes_per_page)
+        page_number = request.GET.get('page')
+        clientes_page = paginator.get_page(page_number)
+
+        try:
+            clientes_page = paginator.page(page)
+        except PageNotAnInteger:
+            clientes_page = paginator.page(default_page)
+        except EmptyPage:
+            clientes_page = paginator.page(paginator.num_pages)
+
+        return render(request, ClienteView.template_name, {
+            'title': title,
+            'clientes': clientes_page,
+            'categorias': categorias,
+            'query': query,
+            'status': status,
+            'grupos': grupos,
+            'categoria': categoria,
+            'form': form
+        })
+
+    def post(self, request):
+        title = 'CLIENTES'
+        form = ClienteForm()
+        categoria1 = request.POST.get('categoria_id')
+        categoria = 1 if categoria1 is None else categoria1
+
+        if request.method == 'POST' and 'search' in request.POST:
+            query = request.POST.get('q', '')
+            categoria = request.POST.get('categoria', '')
+
+            clientes = Teste1Cliente.objects.all().filter(
+                status='A', grupo_id=3)
+            categorias = Teste1Categoria.objects.all()
+
+            if categoria:
+                clientes = clientes.filter(categoria__id=categoria)
+
+            if query:
+                clientes = clientes.filter(
+                    Q(nome__icontains=query) |
+                    Q(cnpj__icontains=query) |
+                    Q(sigla_imp__icontains=query) |
+                    Q(sigla_exp__icontains=query) |
+                    Q(serv_sigla_imp__icontains=query) |
+                    Q(serv_sigla_exp__icontains=query) |
+                    Q(razao_social__icontains=query)
+                    )
+
+            return render(request, ClienteView.template_name, {
+                'title': title,
+                'clientes': clientes,
+                'categoria': categoria,
+                'categorias': categorias,
+                'form': form
+            })
 
 
 class CategoriaView(View):

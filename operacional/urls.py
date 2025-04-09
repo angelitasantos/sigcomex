@@ -3,11 +3,13 @@ from .views import (HomepageTemplateView, ClienteView, CategoriaView,
                     GrupoView, SuporteTemplateView, ImportarDadosView,
                     ImportarClienteView, ImportarClienteAlteradoView,
                     ImportarProcessoView, ImportarProcessoAlteradoView,
-                    OperacionalTemplateView, ProcessosTemplateView)
+                    OperacionalTemplateView, ProcessosTemplateView,
+                    ParceiroView)
 
 urlpatterns = [
      path('', HomepageTemplateView.as_view(), name='homepage'),
 
+     path('parceiros/', ParceiroView.as_view(), name='parceiros'),
      path('clientes/', ClienteView.as_view(), name='clientes'),
      path('categorias/', CategoriaView.as_view(), name='categorias'),
      path('grupos/', GrupoView.as_view(), name='grupos'),
