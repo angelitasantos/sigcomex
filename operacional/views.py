@@ -1,17 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic.base import TemplateView
-from django.core.paginator import Paginator
 from .models import (Teste1Categoria, Teste1Cliente, Teste1Grupo)
 from .forms import (ClienteForm, CategoriaForm, GrupoForm, ImportarDadosForm)
 from django.contrib import messages
 from django.db.models import Q
 import pandas as pd
-from django.core.paginator import (
-    Paginator,
-    EmptyPage,
-    PageNotAnInteger,
-)
+from django.core.paginator import (Paginator,
+                                   EmptyPage,
+                                   PageNotAnInteger,
+                                   )
 
 
 class HomepageTemplateView(TemplateView):
@@ -221,7 +219,7 @@ class ParceiroView(View):
 
             msg = f'Parceiro {nome} Incluído com Sucesso !'
             messages.success(request, msg)
-            return redirect('clientes')
+            return redirect('parceiros')
 
         elif request.method == 'POST' and 'update' in request.POST:
             id = request.POST.get('id')
@@ -246,7 +244,7 @@ class ParceiroView(View):
             cliente.save()
             msg = f'Parceiro {nome} Alterado com Sucesso !'
             messages.success(request, msg)
-            return redirect('clientes')
+            return redirect('parceiros')
 
         elif request.method == 'POST' and 'search' in request.POST:
             query = request.POST.get('q', '')
@@ -278,7 +276,7 @@ class ParceiroView(View):
                     Q(razao_social__icontains=query)
                     )
 
-            return render(request, ClienteView.template_name, {
+            return render(request, ParceiroView.template_name, {
                 'title': title,
                 'clientes': clientes,
                 'status': status,
@@ -295,7 +293,7 @@ class ParceiroView(View):
             # Teste1Cliente.objects.get(id=id).delete()
             msg = f'Parceiro {cliente.nome} Excluído com Sucesso !'
             messages.success(request, msg)
-            return redirect('clientes')
+            return redirect('parceiros')
 
 
 class ClienteView(View):
@@ -391,7 +389,7 @@ class CategoriaView(View):
 
     def get(self, request):
         title = 'CATEGORIAS'
-        categorias = Teste1Categoria.objects.all()
+        categorias = Teste1Categoria.objects.all().order_by('nome')
         form = CategoriaForm()
 
         return render(request, CategoriaView.template_name, {
@@ -441,7 +439,7 @@ class GrupoView(View):
 
     def get(self, request):
         title = 'GRUPOS'
-        grupos = Teste1Grupo.objects.all()
+        grupos = Teste1Grupo.objects.all().order_by('nome')
         form = GrupoForm()
 
         return render(request, GrupoView.template_name, {

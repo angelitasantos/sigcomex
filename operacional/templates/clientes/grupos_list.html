@@ -3,49 +3,45 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-
 <main class="container p-4 rounded shadow bg-white my-5">
 
     <h2 class="text-center mb-3">Listagem de Grupos</h2>
     {% include 'clientes/_breadcrumb_clientes.html' %}
     {% include '_messages.html' %}
 
-    <button class="btn btn-primary btn-sm mb-3" data-toggle="modal" data-target="#createModal">Cadastrar Grupo</button>
+    <button data-bs-toggle="modal" data-bs-target="#createModal" class="btn btn-sm btn-primary btn-sm mb-3">CADASTRAR NOVO GRUPO</button>
 
-    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+    <div class="modal fade" id="createModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="createModal" aria-hidden="true">
 
-      <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
 
-        <form method="POST">
-          {% csrf_token %}
+            <form method="POST">
+            {% csrf_token %}
 
-          <div class="modal-content">
+                <div class="modal-content">
 
-            <div class="modal-header bg-success">
-              <h5 class="modal-title">CRIAR NOVA GRUPO</h5>
-              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-              </button>
-            </div>
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">CRIAR NOVA GRUPO</h5>
+                    </div>
 
-            <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nome" class="fw-bold text-uppercase">Nome</label>
+                            {{ form.nome }}
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning btn-sm px-5 mx-5" data-bs-dismiss="modal">CANCELAR</button>
+                        <button type="submit" class="btn btn-success btn-sm px-5" name="create">ADICIONAR</button>
+                    </div>
 
-              <div class="mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                {{ form.nome }}
-              </div>
+                </div>
 
-            </div>
-            
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-success btn-sm px-5" name="create">ADICIONAR</button>
-            </div>
+            </form>
 
-          </div>
-
-        </form>
-
-      </div>
+        </div>
 
     </div>
 
@@ -53,7 +49,7 @@
 
         <thead class="table-dark">
 
-            <tr class="small">
+            <tr class="small text-uppercase">
                 <th>ID</th>
                 <th>Status</th>
                 <th>Nome</th>
@@ -65,14 +61,13 @@
         <tbody class="table-sm">
 
             {% for grupo in grupos %}
-
             <tr class="small">
-                <td style="width:60px">{{ grupo.id }}</td>
-                <td style="width:60px">{{ grupo.get_status_display }}</td>
-                <td>{{ grupo.nome }}</td>
-                <td style="width:240px" class="text-center">
-                    <a href="" data-bs-toggle="modal" data-bs-target="#updateModal_{{ grupo.id }}" class="btn btn-sm btn-warning btn-sm mx-3">ALTERAR</a>
-                    <a href="" data-bs-toggle="modal" data-bs-target="#deletModal_{{ grupo.id }}" class="btn btn-sm btn-danger btn-sm mx-3">EXCLUIR</a>
+                <td class="align-middle" style="width:60px">{{ grupo.id }}</td>
+                <td class="align-middle" style="width:60px">{{ grupo.get_status_display }}</td>
+                <td class="align-middle">{{ grupo.nome }}</td>
+                <td class="align-middle" style="width:240px" class="text-center">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#updateModal_{{ grupo.id }}" class="btn btn-sm btn-warning px-4 mx-2">ALTERAR</a>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#deletModal_{{ grupo.id }}" class="btn btn-sm btn-danger px-4">EXCLUIR</a>
                 </td>
             </tr>
 
@@ -85,25 +80,23 @@
                         {% csrf_token %}
 
                         <div class="modal-content">
-                            <div class="modal-header bg-warning">
+                            <div class="modal-header bg-warning text-white">
                                 <h5 class="modal-title" id="updateModal_{{ grupo.id }}Label">ALTERAR GRUPO</h5>
                             </div>
                             <div class="modal-body row">
                                 <input type="hidden" name="id" value="{{ grupo.id }}">
-
                                 <div class="col-sm-9 mt-3 mb-4">
-                                    <label for="nome">Nome</label>
+                                    <label for="nome" class="fw-bold text-uppercase">Nome</label>
                                     <input required type="text" value="{{ grupo.nome }}" name="nome" 
                                       class="form-control form-control-sm" autocomplete="off">
                                 </div>
-
                                 <div class="col-sm-3 mt-3 mb-4">
-                                  <span>Status</span>
-                                  <select class=" form-control form-control-sm" name="status">
-                                      <option value="{{ grupo.status }}">{{ grupo.get_status_display }}</option>
-                                      <option value="A">ATIVO</option>
-                                      <option value="I">INATIVO</option>
-                                  </select>
+                                    <span class="fw-bold text-uppercase">Status</span>
+                                    <select class=" form-control form-control-sm" name="status">
+                                        <option value="{{ grupo.status }}">{{ grupo.get_status_display }}</option>
+                                        <option value="A">ATIVO</option>
+                                        <option value="I">INATIVO</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -111,6 +104,7 @@
                                 <button type="submit" class="btn btn-success btn-sm px-5" name="update">ALTERAR</button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -123,12 +117,12 @@
                         {% csrf_token %}
                         <input type="hidden" name="id" value="{{ grupo.id }}">
                         <div class="modal-content">
-                            <div class="modal-header bg-danger">
+                            <div class="modal-header bg-danger text-white">
                                 <h5 class="modal-title">EXCLUIR GRUPO</h5>
                             </div>
                             <div class="modal-body">
                                 <p class="mt-3">Você tem certeza que deseja deletar a grupo:</p>
-                                <p>{{ grupo.nome }}</p>
+                                <p class="fw-bold">{{ grupo.nome }}</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-warning btn-sm px-5 mx-5" data-bs-dismiss="modal">CANCELAR</button>
