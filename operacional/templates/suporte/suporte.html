@@ -3,9 +3,68 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-<main class="container p-4 rounded shadow bg-white my-5">
+<main class="container p-4 shadow-lg p-3 mb-5 bg-white rounded my-5">
 
     <h2 class="text-center mb-3">Suporte</h2>
+    {% include 'suporte/_breadcrumb_suporte.html' %}
+
+    <section class="container mb-5"><!-- Suporte -->
+
+        <div class="row mt-5">
+
+            <div class="col-sm-12">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-lg-3 mb-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="{% url 'empresas' %}" class="btn btn-primary btn-sm mx-1">EMPRESAS</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 mb-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="{% url 'usuarios' %}" class="btn btn-primary btn-sm mx-1">USUARIOS</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 mb-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="{% url 'importardados' %}" class="btn btn-primary btn-sm mx-1">IMPORTAR DADOS</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 mb-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="{% url 'exportardados' %}" class="btn btn-primary btn-sm mx-1">EXPORTAR DADOS</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-body-secondary">
+                        <a href="{% url 'suporte' %}" class="btn btn-info btn-sm mx-1">MANUAL ONLINE</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="mt-5"></div>
     {% include 'suporte/_breadcrumb_suporte.html' %}
 
 </main>

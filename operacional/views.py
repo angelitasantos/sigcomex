@@ -21,52 +21,6 @@ MODELOS_DISPONIVEIS = {
 }
 
 
-def escolher_modelo_view(request):
-    if request.method == 'POST':
-        nome_modelo = request.POST.get('tabela')
-        modelo = MODELOS_DISPONIVEIS.get(nome_modelo)
-
-        if modelo is None:
-            return HttpResponse("Modelo inválido", status=400)
-
-        queryset = modelo.objects.all().values()
-        df = pd.DataFrame(list(queryset))
-
-        buffer = BytesIO()
-        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name=nome_modelo)
-        buffer.seek(0)
-        t = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-
-        response = HttpResponse(
-            buffer,
-            content_type=t
-        )
-        arquivo = f'attachment; filename="{nome_modelo}.xlsx"'
-        response['Content-Disposition'] = arquivo
-        return response
-
-    return render(request, 'exportar_excel.html')
-
-
-def exportar_excel_view(request):
-    queryset = Teste1Cliente.objects.all().values()
-    df = pd.DataFrame(list(queryset))
-    buffer = BytesIO()
-    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-        df.to_excel(writer, index=False, sheet_name='Dados')
-    buffer.seek(0)
-    tipo = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    response = HttpResponse(
-        buffer,
-        content_type=tipo
-    )
-    response[
-        'Content-Disposition'] = 'attachment; filename="dados.xlsx"'
-
-    return response
-
-
 class HomepageTemplateView(TemplateView):
     template_name = 'homepage.html'
 
@@ -571,3 +525,163 @@ class GrupoView(View):
             msg = f'Grupo {grupo.nome} Excluído com Sucesso !'
             messages.success(request, msg)
             return redirect('grupos')
+
+
+class EmpresaView(View):
+    template_name = 'suporte/empresas.html'
+
+    def get(self, request):
+        title = 'EMPRESAS'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=1)
+        form = ClienteForm()
+
+        return render(request, EmpresaView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class UsuarioView(View):
+    template_name = 'suporte/usuarios.html'
+
+    def get(self, request):
+        title = 'USUARIOS'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, UsuarioView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class HonorarioView(View):
+    template_name = 'operacional/honorarios.html'
+
+    def get(self, request):
+        title = 'HONORARIOS'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, HonorarioView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class TipoServicoView(View):
+    template_name = 'operacional/tipos_servicos.html'
+
+    def get(self, request):
+        title = 'TIPOS SERVIÇOS'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, TipoServicoView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class SdaView(View):
+    template_name = 'operacional/sda.html'
+
+    def get(self, request):
+        title = 'SDAs'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, SdaView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class OutroView(View):
+    template_name = 'operacional/outros.html'
+
+    def get(self, request):
+        title = 'OUTROS'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, OutroView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class ProcessoComexView(View):
+    template_name = 'processos/processos comex.html'
+
+    def get(self, request):
+        title = 'PROCESSOS COMEX'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, ProcessoComexView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class ProcessoServicoView(View):
+    template_name = 'processos/processos servicos.html'
+
+    def get(self, request):
+        title = 'PROCESSOS SERVIÇOS'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, ProcessoServicoView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class FaturamentoView(View):
+    template_name = 'processos/faturamento.html'
+
+    def get(self, request):
+        title = 'FATURAMENTO'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, FaturamentoView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
+
+
+class NotaFiscalView(View):
+    template_name = 'processos/notas_fiscais.html'
+
+    def get(self, request):
+        title = 'NOTAS FISCAIS'
+        clientes = Teste1Cliente.objects.all().order_by(
+            'nome').filter(grupo_id=4)
+        form = ClienteForm()
+
+        return render(request, NotaFiscalView.template_name, {
+            'title': title,
+            'clientes': clientes,
+            'form': form
+        })
