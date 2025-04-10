@@ -1,19 +1,62 @@
 {% load static %}
-<header class="navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'homepage' %}">GRUPO PLENO</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alternar navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" 
+                        data-bs-toggle="dropdown" aria-expanded="false">CLIENTES</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+                        <li><a class="dropdown-item" href="{% url 'clientes' %}">CLIENTES</a></li>
+                        <li><a class="dropdown-item" href="{% url 'categorias' %}">CATEGORIAS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'grupos' %}">GRUPOS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'parceiros' %}">PARCEIROS</a></li>
+                    </ul>
+                </li>
 
-    <div class="container text-white">
-
-        <h4 class="logo mt-3"><a class="nav-link" href="{% url 'homepage' %}">PLENO COMEX</a></h4>
-
-        <nav class="menu navbar">
-
-            <a class="nav-item px-2" href="{% url 'clientes' %}">CLIENTES</a>
-            <a class="nav-item px-2" href="{% url 'processos' %}">PROCESSOS</a>
-            <a class="nav-item px-2" href="{% url 'operacional' %}">OPERACIONAL</a>
-            <a class="nav-item px-2" href="{% url 'suporte' %}">SUPORTE</a>
-
-        </nav>
-
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" 
+                        data-bs-toggle="dropdown" aria-expanded="false">PROCESSOS</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+                        <li><a class="dropdown-item" href="{% url 'processos_comex' %}">PLENO COMEX</a></li>
+                        <li><a class="dropdown-item" href="{% url 'processos_servicos' %}">PLENO SERVIÇOS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'processos_nextbh' %}">NEXT BHZ</a></li>
+                        <li><a class="dropdown-item" href="{% url 'processos_nextsp' %}">NEXT SAO PAULO</a></li>
+                        <li><a class="dropdown-item" href="{% url 'processos_lean' %}">LEAN LOGISTICA</a></li>
+                    </ul>
+                </li>
+        
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" 
+                        data-bs-toggle="dropdown" aria-expanded="false">FATURAMENTO</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+                        <li><a class="dropdown-item" href="{% url 'honorarios' %}">HONORARIOS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tipos_servicos' %}">TIPOS SERVIÇOS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'controle_sda' %}">CONTROLE SDA</a></li>
+                        <li><a class="dropdown-item" href="{% url 'faturamento' %}">FATURAMENTO</a></li>
+                        <li><a class="dropdown-item" href="{% url 'notas_fiscais' %}">NOTAS FISCAIS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'notas_debito' %}">NOTAS DE DEBITO</a></li>
+                    </ul>
+                </li>
+        
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" 
+                        data-bs-toggle="dropdown" aria-expanded="false">SUPORTE</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+                        <li><a class="dropdown-item" href="{% url 'empresas' %}">EMPRESAS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'usuarios' %}">USUARIOS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'importardados' %}">IMPORTAR DADOS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'exportardados' %}">EXPORTAR DADOS</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-
-</header>
+  </nav>

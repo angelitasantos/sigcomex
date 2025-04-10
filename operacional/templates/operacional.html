@@ -5,10 +5,10 @@
 {% block body %}
 <main class="container p-4 shadow-lg p-3 mb-5 bg-white rounded my-5">
 
-    <h2 class="text-center mb-3">Operacional</h2>
-    {% include 'operacional/_breadcrumb_operacional.html' %}
+    <h2 class="text-center mb-3">Faturamento</h2>
+    {% include 'faturamento/_breadcrumb_faturamento.html' %}
 
-    <section class="container mb-5"><!-- Operacional -->
+    <section class="container mb-5"><!-- Faturamento -->
 
         <div class="row mt-5">
 
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-body-secondary">
-                        <a href="{% url 'operacional' %}" class="btn btn-info btn-sm mx-1">MAIS INFORMAÇÕES</a>
+                        <a href="{% url 'faturamento' %}" class="btn btn-info btn-sm mx-1">MAIS INFORMAÇÕES</a>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
     </section>
 
     <div class="mt-5"></div>
-    {% include 'operacional/_breadcrumb_operacional.html' %}
+    {% include 'faturamento/_breadcrumb_faturamento.html' %}
 
 </main>
 {% endblock %}

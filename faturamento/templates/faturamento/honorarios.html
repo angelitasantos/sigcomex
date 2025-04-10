@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<main class="container p-4 shadow-lg p-3 mb-5 bg-white rounded my-5">
+
+    <h2 class="text-center mb-3">Honorários</h2>
+    {% include 'faturamento/_breadcrumb_faturamento.html' %}
+
+    <div class="container my-5">
+        {% include 'error 404.html' %}
+    </div>
+
+</main>
+{% endblock %}
