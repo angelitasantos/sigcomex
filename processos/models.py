@@ -67,7 +67,9 @@ class Teste1ProcessoComex(models.Model):
                                      on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f'{self.data_abertura} - {self.codigo_processo}'
+        parte1 = f'{self.codigo_processo} - {self.comex} - {self.modal}'
+        parte2 = f'{self.status} - {self.cliente.nome}'
+        return f'{parte1} - {parte2}'
 
     class Meta:
         ordering = ('-id',)

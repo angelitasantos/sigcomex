@@ -25,7 +25,7 @@ class ProcessosTemplateView(TemplateView):
 
 
 class ProcessoComexView(View):
-    template_name = 'processos/processos_comex.html'
+    template_name = 'processos/comex/processos_comex.html'
 
     def get(self, request):
         title = 'PROCESSOS COMEX'
@@ -97,29 +97,7 @@ class ProcessoComexView(View):
         empresa_tipo = 1 if empresa_tipo1 is None else empresa_tipo1
 
         status = 'A'
-        if request.method == 'POST' and 'create' in request.POST:
-
-            Teste1ProcessoComex.objects.create(
-                nome=nome,
-                razao_social=razao_social,
-                cnpj=cnpj,
-                insc_est=insc_est,
-                sigla_imp=sigla_imp,
-                sigla_exp=sigla_exp,
-                serv_sigla_imp=serv_sigla_imp,
-                serv_sigla_exp=serv_sigla_exp,
-                cod_interno=cod_interno,
-                observacoes=observacoes,
-                status=status,
-                grupo_id=grupo,
-                categoria_id=categoria
-            )
-
-            msg = f'Parceiro {nome} Incluído com Sucesso !'
-            messages.success(request, msg)
-            return redirect('parceiros')
-
-        elif request.method == 'POST' and 'update' in request.POST:
+        if request.method == 'POST' and 'update' in request.POST:
             id = request.POST.get('id_processo')
             # status = request.POST.get('status')
             ref_cliente = request.POST.get('ref_cliente')
@@ -193,6 +171,112 @@ class ProcessoComexView(View):
             messages.success(request, msg)
             return redirect('processos_comex')
 
+
+class PComex1View(View):
+    template_name = 'processos/comex/comex_gerar_capa.html'
+
+    def get(self, request):
+        title = 'COMEX GERAR CAPA'
+        processos = Teste1ProcessoComex.objects.all().order_by(
+            '-id').filter(status='N')
+        form = ProcessosComexForm()
+
+        tipos_comex = Teste1TipoComex.objects.all()
+
+        query = request.GET.get('q', '')
+        status = request.GET.get('status', '')
+        comex = request.GET.get('comex', '')
+        modal = request.GET.get('modal', '')
+        empresa_tipo = request.GET.get('empresa_tipo', '')
+
+        if status:
+            processos = processos.filter(status=status)
+
+        if comex:
+            processos = processos.filter(comex=comex)
+
+        if modal:
+            processos = processos.filter(modal=modal)
+
+        if empresa_tipo:
+            processos = processos.filter(empresa_tipo_id=empresa_tipo)
+
+        default_page = 1
+        page = request.GET.get('page', default_page)
+        processos_per_page = 25
+
+        paginator = Paginator(processos, processos_per_page)
+        page_number = request.GET.get('page')
+        processos_page = paginator.get_page(page_number)
+
+        try:
+            processos_page = paginator.page(page)
+        except PageNotAnInteger:
+            processos_page = paginator.page(default_page)
+        except EmptyPage:
+            processos_page = paginator.page(paginator.num_pages)
+
+        return render(request, PComex1View.template_name, {
+            'title': title,
+            'processos': processos_page,
+            'tipos_comex': tipos_comex,
+            'query': query,
+            'status': status,
+            'comex': comex,
+            'modal': modal,
+            'empresa_tipo': empresa_tipo,
+            'form': form
+        })
+
+
+class PComex2View(View):
+    template_name = 'processos/comex/comex_em_andamento.html'
+
+    def get(self, request):
+        title = 'COMEX EM ANDAMENTO'
+        return render(request, PComex1View.template_name, {
+                'title': title
+            })
+
+
+class PComex3View(View):
+    template_name = 'processos/comex/comex_a_faturar.html'
+
+    def get(self, request):
+        title = 'COMEX A FATURAR'
+        return render(request, PComex1View.template_name, {
+                'title': title
+            })
+
+
+class PComex4View(View):
+    template_name = 'processos/comex/comex_faturado.html'
+
+    def get(self, request):
+        title = 'COMEX FATURADO'
+        return render(request, PComex1View.template_name, {
+                'title': title
+            })
+
+
+class PComex5View(View):
+    template_name = 'processos/comex/comex_verificar.html'
+
+    def get(self, request):
+        title = 'COMEX VERIFICAR'
+        return render(request, PComex1View.template_name, {
+                'title': title
+            })
+
+
+class PComex6View(View):
+    template_name = 'processos/comex/comex_concluido.html'
+
+    def get(self, request):
+        title = 'COMEX CONCLUIDO'
+        return render(request, PComex1View.template_name, {
+                'title': title
+            })
 
 
 class ProcessoServicoView(View):

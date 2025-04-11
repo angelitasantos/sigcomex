@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<main class="container p-4 shadow-lg p-3 mb-5 bg-white rounded my-5">
+
+    <h2 class="text-center mb-3">{{ title }}</h2>
+    {% include 'processos/_breadcrumb_processos.html' %}
+
+    <div class="row mb-3">
+        <a href="{% url 'processos_comex1' %}" class="col-sm-2 btn btn-sm btn-info rounded">GERAR CAPA</a>
+        <a href="{% url 'processos_comex2' %}" class="col-sm-2 btn btn-sm btn-success rounded">EM ANDAMENTO</a>
+        <a href="{% url 'processos_comex3' %}" class="col-sm-2 btn btn-sm btn-danger rounded">A FATURAR</a>
+        <a href="{% url 'processos_comex4' %}" class="col-sm-2 btn btn-sm btn-warning rounded">FATURADO</a>
+        <a href="{% url 'processos_comex5' %}" class="col-sm-2 btn btn-sm btn-secondary rounded">VERIFICAR</a>
+        <a href="{% url 'processos_comex6' %}" class="col-sm-2 btn btn-sm btn-primary rounded">CONCLUIDO</a>
+    </div>
+
+    {% include '_messages.html' %}
+
+    <form method="POST" class="mb-3">
+        {% csrf_token %}
+        
+        <div class="row">
+
+            <div class="col-sm-3">
+                <input type="text" name="query" class="form-control form-control-sm" autocomplete="off"
+                placeholder="por cliente, Ref.Pleno, Ref.Cliente" value="{{ query }}">
+            </div>
+
+            <div class="col-sm-2">
+                <select name="status" class="form-control form-control-sm">
+                    <option value="">Todos os Status</option>
+                    <option value="N">NÃO INICIADO</option>
+                    <option value="E">EM ANDAMENTO</option>
+                    <option value="A">A FATURAR</option>
+                    <option value="F">FATURADO</option>
+                    <option value="V">VERIFICAR</option>
+                    <option value="C">CONCLUIDO</option>
+                </select>
+            </div>
+
+            <div class="col-sm-2">
+                <select name="comex" class="form-control form-control-sm">
+                    <option value="">Todos os Comex</option>
+                    <option value="I">IMP</option>
+                    <option value="E">EXP</option>
+                    <option value="O">OUTRO</option>
+                </select>
+            </div>
+
+            <div class="col-sm-2">
+                <select name="modal" class="form-control form-control-sm">
+                    <option value="">Todos os Modais</option>
+                    <option value="M">MARITIMO</option>
+                    <option value="A">AEREO</option>
+                    <option value="R">RODOVIARIO</option>
+                    <option value="C">COURIER</option>
+                    <option value="P">POSTAL</option>
+                    <option value="O">OUTRO</option>
+                </select>
+            </div>
+
+            <div class="col-sm-2">
+                <select name="empresa_tipo" class="form-control form-control-sm">
+                    <option value="">Todas os Tipos</option>
+                    {% for tipos in tipos_comex %}
+                        <option value="{{ tipos.id }}">{{ tipos.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-primary btn-sm" name="search">FILTRAR</button>
+            </div>
+
+        </div>
+    </form>
+
+    <table class="table table-responsive table-hover table-sm">
+
+        <thead class="table-dark">
+    
+          <tr class="small text-uppercase">
+            <th scope="col">Ref.Siscomex</th>
+            <th scope="col">Abertura</th>
+            <th scope="col">Ref.Cliente</th>
+            <th scope="col">Modal</th>
+            <th scope="col">Cliente</th>
+            <th class="text-center" scope="col">Ações</th>
+          </tr>
+    
+        </thead>
+
+        <tbody class="table-sm">
+
+            {% for processo in processos %}
+            
+            <tr class="small">
+                <td class="align-middle" style="width:100px">{{ processo.codigo_processo }}</td>
+                <th class="align-middle" style="width:100px">{{ processo.data_abertura|date:"d/m/Y"  }}</th>
+                <td class="align-middle" style="width:100px">{{ processo.ref_cliente }}</td>
+                <td class="align-middle" style="width:100px">{{ processo.get_modal_display }}</td>
+                <td class="align-middle" style="width:260px;">{{ processo.cliente.nome }}</td>
+                <td class="text-center align-middle" style="width:70px">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#updateModal_{{ processo.id }}" 
+                        class="btn btn-sm btn-warning px-2 mx-1"><i
+                        class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#deletModal_{{ processo.id }}" 
+                        class="btn btn-sm btn-danger px-2 mx-1"><i
+                        class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+
+            <!-- update modal -->
+            <div class="modal fade" id="updateModal_{{ processo.id }}" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateModal_{{ processo.id }}Label" aria-hidden="true">
+
+                <div class="modal-dialog">
+
+                    <form action="" method="post">
+                    {% csrf_token %}
+
+                        <div class="modal-content">
+                            <div class="modal-header bg-warning text-white">
+                                <h1 class="modal-title fs-5" id="processoModal_{{ processo.id }}Label">ALTERAR PROCESSO</h1>
+                            </div>
+
+                            <div class="modal-body">
+                                <input type="hidden" name="id_processo" value="{{ processo.id }}">
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label for="ref_cliente">Ref Cliente</label>
+                                        <input type="text" value="{{ processo.ref_cliente }}" name="ref_cliente" autocomplete="off" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+
+                                    <div class="col-sm-4">
+                                        <span class="fw-bold text-uppercase">Comex</span>
+                                        <select class="form-control form-control-sm" name="comex">
+                                            <option value="{{ processo.comex }}">{{ processo.get_comex_display }}</option>
+                                            <option value="I">IMPORTAÇÃO</option>
+                                            <option value="E">EXPORTAÇÃO</option>
+                                            <option value="O">OUTRO</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <span class="fw-bold text-uppercase">Modal</span>
+                                        <select class="form-control form-control-sm" name="modal">
+                                            <option value="{{ processo.modal }}">{{ processo.get_modal_display }}</option>
+                                            <option value="M">MARITIMO</option>
+                                            <option value="A">AEREO</option>
+                                            <option value="R">RODOVIARIO</option>
+                                            <option value="C">COURIER</option>
+                                            <option value="P">POSTAL</option>
+                                            <option value="O">OUTRO</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <span class="fw-bold text-uppercase">Tipo</span>
+                                        <select class="form-control form-control-sm" name="empresa_tipo_id">
+                                            <option value="{{ processo.empresa_tipo.id }}">{{ processo.empresa_tipo.nome }}</option>
+                                            {% for tipo in tipos_comex %}
+                                                <option value="{{ tipo.id }}">{{ tipo.nome }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning btn-sm px-4 mx-4" data-bs-dismiss="modal">CANCELAR</button>
+                                <button type="submit" class="btn btn-primary btn-sm px-4" name="update">SALVAR</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- delete modal -->
+            <div class="modal fade" id="deletModal_{{ processo.id }}" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="deletModal_{{ processo.id }}Label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ processo.id }}">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title">EXCLUIR PARCEIRO</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p class="mt-3">Você tem certeza que deseja deletar o processo:</p>
+                                <p class="fw-bold">{{ processo.codigo_processo }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning btn-sm px-5 mx-5" data-bs-dismiss="modal">CANCELAR</button>
+                                <button type="submit" class="btn btn-danger btn-sm px-5" name="delete">EXCLUIR</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    <nav aria-label="Page navigation example">
+
+        {% if processos.has_other_pages %}
+        <ul class="pagination justify-content-center mt-5">
+
+            {% if processos.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ processos.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+            {% endif %}
+
+            {% for i in processos.paginator.page_range %}
+                {% if processos.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if processos.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ processos.next_page_number }}">&raquo;</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            {% endif %}
+
+        </ul>
+        {% endif %}
+
+    </nav>
+
+    <div class="mt-5"></div>
+    {% include 'processos/_breadcrumb_processos.html' %}
+
+</main>
+{% endblock %}

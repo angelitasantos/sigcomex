@@ -9,12 +9,12 @@
     {% include 'processos/_breadcrumb_processos.html' %}
 
     <div class="row mb-3">
-        <a href="{% url 'processos_comex' %}" class="col-sm-2 btn btn-sm btn-info rounded">GERAR CAPA</a>
-        <a href="{% url 'processos_comex' %}" class="col-sm-2 btn btn-sm btn-success rounded">EM ANDAMENTO</a>
-        <a href="{% url 'processos_comex' %}" class="col-sm-2 btn btn-sm btn-danger rounded">A FATURAR</a>
-        <a href="{% url 'processos_comex' %}" class="col-sm-2 btn btn-sm btn-warning rounded">FATURADO</a>
-        <a href="{% url 'processos_comex' %}" class="col-sm-2 btn btn-sm btn-secondary rounded">VERIFICAR</a>
-        <a href="{% url 'processos_comex' %}" class="col-sm-2 btn btn-sm btn-primary rounded">CONCLUIDO</a>
+        <a href="{% url 'processos_comex1' %}" class="col-sm-2 btn btn-sm btn-info rounded">GERAR CAPA</a>
+        <a href="{% url 'processos_comex2' %}" class="col-sm-2 btn btn-sm btn-success rounded">EM ANDAMENTO</a>
+        <a href="{% url 'processos_comex3' %}" class="col-sm-2 btn btn-sm btn-danger rounded">A FATURAR</a>
+        <a href="{% url 'processos_comex4' %}" class="col-sm-2 btn btn-sm btn-warning rounded">FATURADO</a>
+        <a href="{% url 'processos_comex5' %}" class="col-sm-2 btn btn-sm btn-secondary rounded">VERIFICAR</a>
+        <a href="{% url 'processos_comex6' %}" class="col-sm-2 btn btn-sm btn-primary rounded">CONCLUIDO</a>
     </div>
 
     {% include '_messages.html' %}
@@ -103,10 +103,7 @@
                 <td class="align-middle" style="width:100px">{{ processo.ref_cliente }}</td>
                 <td class="align-middle" style="width:100px">{{ processo.get_modal_display }}</td>
                 <td class="align-middle" style="width:260px;">{{ processo.cliente.nome }}</td>
-                <td class="text-center align-middle" style="width:100px">
-                    <a href="" data-bs-toggle="modal" data-bs-target="#processoModal_{{ processo.id }}" 
-                        class="btn btn-sm btn-secondary px-2 mx-1"><i
-                        class="fa-solid fa-coins"></i></a>
+                <td class="text-center align-middle" style="width:70px">
                     <a href="" data-bs-toggle="modal" data-bs-target="#updateModal_{{ processo.id }}" 
                         class="btn btn-sm btn-warning px-2 mx-1"><i
                         class="fa-regular fa-pen-to-square"></i></a>
@@ -168,7 +165,7 @@
                                     <div class="col-sm-4">
                                         <span class="fw-bold text-uppercase">Tipo</span>
                                         <select class="form-control form-control-sm" name="empresa_tipo_id">
-                                            <option value="{{ processo.grupo.id }}">{{ processo.empresa_tipo.nome }}</option>
+                                            <option value="{{ processo.empresa_tipo.id }}">{{ processo.empresa_tipo.nome }}</option>
                                             {% for tipo in tipos_comex %}
                                                 <option value="{{ tipo.id }}">{{ tipo.nome }}</option>
                                             {% endfor %}
@@ -213,131 +210,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
-
-            <!-- honorario modal -->
-            <div class="modal fade" id="processoModal_{{ cliente.id }}" tabindex="-1"
-                aria-labelledby="processoModal_{{ cliente.id }}Label" aria-hidden="true">
-
-                <div class="modal-dialog">
-
-                    <form action="" method="post">
-                    {% csrf_token %}
-
-                        <div class="modal-content">
-                            <div class="modal-header bg-secondary text-white">
-                                <h1 class="modal-title fs-5" id="processoModal_{{ cliente.id }}Label">HONORARIO</h1>
-                            </div>
-
-                            <div class="modal-body">
-                                <input type="hidden" name="id_cliente" value="{{ cliente.id }}">
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <label for="ref_cliente">Ref Cliente</label>
-                                        <input type="text" value="" name="ref_cliente" autocomplete="off" class="form-control form-control-sm">
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
-
-                                    <div class="col-sm-4">
-                                        <span>Comex</span>
-                                        <select class="form-control form-control-sm" name="comex">
-                                            <option value="I">IMPORTAÇÃO</option>
-                                            <option value="E">EXPORTAÇÃO</option>
-                                            <option value="O">OUTRO</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <span>Modal</span>
-                                        <select class="form-control form-control-sm" name="modal">
-                                            <option value="M">MARITIMO</option>
-                                            <option value="A">AEREO</option>
-                                            <option value="R">RODOVIARIO</option>
-                                            <option value="C">COURIER</option>
-                                            <option value="P">POSTAL</option>
-                                            <option value="O">OUTRO</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <span>Tipo</span>
-                                        <select class="form-control form-control-sm" name="tipo">
-                                            <option value="1">CONSUMO</option>
-                                            <option value="2">REVENDA</option>
-                                            <option value="3">NACIONALIZACAO</option>
-                                            <option value="4">RECOF</option>
-                                            <option value="5">DRAWBACK</option>
-                                            <option value="6">AD TEMP</option>
-                                            <option value="7">RET EXP TEMP</option>
-                                            <option value="8">AGENCIAMENTO</option>
-                                            <option value="9">FECHAMENTO</option>
-                                            <option value="10">PRE ENTRY</option>
-                                            <option value="11">INTERCOMPANY</option>
-                                            <option value="12">DIRECT BUY</option>
-                                            <option value="99">OUTRO</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-
-                                <div class="row mt-3">
-
-                                    <div class="col-sm-6">
-                                        <label for="nome">Nome Fantasia</label>
-                                        <input required type="text" value="{{ cliente.nome }}" name="nome" autocomplete="off"
-                                            class="form-control form-control-sm">
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <label for="cnpj">CNPJ</label>
-                                        <input type="text" value="{{ cliente.cnpj }}" name="cnpj" autocomplete="off"
-                                            class="form-control form-control-sm">
-                                    </div>
-
-                                </div>
-
-                                <div class="row mt-3">
-
-                                    <div class="col-sm-4">
-                                        <label for="siglaimp">Sigla Importação</label>
-                                        <input type="text" value="{{ cliente.siglaimp }}" name="siglaimp" autocomplete="off"
-                                            class="form-control form-control-sm">
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label for="siglaexp">Sigla Exportação</label>
-                                        <input type="text" value="{{ cliente.siglaexp }}" name="siglaexp" autocomplete="off"
-                                            class="form-control form-control-sm">
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <span>Saldo</span>
-                                        <select class="form-control form-control-sm" name="saldo">
-                                            <option value="P">PLENO</option>
-                                            <option value="C">CLIENTE</option>
-                                            <option value="S">SDA</option>
-                                            <option value="O">OUTRO</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-warning btn-sm px-4 mx-4" data-bs-dismiss="modal">CANCELAR</button>
-                                <button type="submit" class="btn btn-primary btn-sm px-4" name="processo">SALVAR</button>
-                            </div>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
             </div>
 
             {% endfor %}
