@@ -4,6 +4,7 @@ from django.views.generic.base import TemplateView
 from parceiros.models import (Teste1Cliente)
 from parceiros.forms import (ClienteForm)
 from django.contrib import messages
+from django.contrib.messages import constants
 from django.db.models import Q
 import pandas as pd
 from django.core.paginator import (Paginator,
@@ -99,3 +100,48 @@ class ProcessoLeanView(View):
             'clientes': clientes,
             'form': form
         })
+
+
+def todo_view(request, id):
+    title = 'Editar Processo'
+    todos = Teste1Cliente.objects.filter(id=id)
+
+    if not todos.exists():
+        messages.add_message(request, constants.ERROR, 'Não existe uma tarefa com este identificador !!!')
+        return redirect('/')
+
+    todo = Teste1Cliente.objects.get(id=id)
+    context = {'title': title,
+               'todo': todo}
+    return render(request, 'processos/processos_comex_update.html', context)
+
+
+def todo_update(request, id):
+    title = 'Alterar Tarefa'
+
+    description = request.POST.get('description')
+    category = request.POST.get('category')
+    status = request.POST.get('status')
+
+    todo = Teste1Cliente.objects.get(id=id)
+    context = {'title': title,
+               'todo': todo}
+
+    if (len(description.strip()) == 0):
+        messages.add_message(request, constants.ERROR, 'Preencha todos os campos !!!')
+        return render(request, 'processos/processos_comex_update.html', context)
+
+    todos = Teste1Cliente.objects.filter(id=id)
+    if todos.exists():
+        try:
+            todo.description = description
+            todo.category = category
+            todo.status = status
+
+            todo.save()
+
+            messages.add_message(request, constants.SUCCESS, 'Tarefa Alterada com Sucesso!')
+            return redirect('/')
+        except AttributeError:
+            messages.add_message(request, constants.ERROR, 'Erro Interno do Sistema!!!')
+            return redirect('/')

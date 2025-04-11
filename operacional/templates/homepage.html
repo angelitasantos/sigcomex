@@ -8,66 +8,7 @@
 
     <img src="{% static '/images/fundo_pleno_comex.png' %}" alt="" class="img-fluid">
 
-    <section class="container"><!--  -->
-
-        <div class="row mt-5">
-
-            <div class="col-sm-12">
-                <div class="card text-center">
-                    <div class="card-header h3 bg-secondary text-white">
-                        Clientes
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'clientes' %}" class="btn btn-primary btn-sm mx-1">CLIENTES</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'categorias' %}" class="btn btn-primary btn-sm mx-1">CATEGORIAS</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'grupos' %}" class="btn btn-primary btn-sm mx-1">GRUPOS</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'parceiros' %}" class="btn btn-primary btn-sm mx-1">PARCEIROS</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-body-secondary">
-                        <a href="{% url 'clientes' %}" class="btn btn-info btn-sm mx-1">MAIS INFORMAÇÕES</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="container"><!--  -->
+    <section class="container"><!-- Processos -->
 
         <div class="row mt-5">
 
@@ -78,39 +19,53 @@
                     </div>
                     <div class="card-body">
                         <div class="row mb-3">
-                            <div class="col-lg-3 mb-3 col-md-6">
+                            <div class="col-lg-6 mb-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'processos' %}" class="btn btn-primary btn-sm mx-1">PROCESSOS COMEX</a>
+                                        <h5 class="card-title">PLENO COMEX</h5>
+                                        <p class="card-text">.</p>
+                                        <p class="card-text">.</p>
+                                        <a href="{% url 'processos_comex' %}" class="btn btn-primary btn-sm mx-1">ACESSAR</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
+                            <div class="col-lg-6 mb-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'processos' %}" class="btn btn-primary btn-sm mx-1">PROCESSOS SERVIÇOS</a>
+                                        <h5 class="card-title">PLENO SERVIÇOS</h5>
+                                        <p class="card-text">.</p>
+                                        <p class="card-text">.</p>
+                                        <a href="{% url 'processos_servicos' %}" class="btn btn-primary btn-sm mx-1">ACESSAR</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
+                            <div class="col-lg-4 mb-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'processos' %}" class="btn btn-primary btn-sm mx-1">FATURAMENTO</a>
+                                        <h5 class="card-title">NEXT BHZ</h5>
+                                        <p class="card-text">.</p>
+                                        <p class="card-text">.</p>
+                                        <a href="{% url 'processos_nextbh' %}" class="btn btn-primary btn-sm mx-1">ACESSAR</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
+                            <div class="col-lg-4 mb-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'processos' %}" class="btn btn-primary btn-sm mx-1">NOTAS FISCAIS</a>
+                                        <h5 class="card-title">NEXT BHZ</h5>
+                                        <p class="card-text">.</p>
+                                        <p class="card-text">.</p>
+                                        <a href="{% url 'processos_nextbh' %}" class="btn btn-primary btn-sm mx-1">ACESSAR</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">LEAN LOGISTICA</h5>
+                                        <p class="card-text">.</p>
+                                        <p class="card-text">.</p>
+                                        <a href="{% url 'processos_lean' %}" class="btn btn-primary btn-sm mx-1">ACESSAR</a>
                                     </div>
                                 </div>
                             </div>
@@ -118,124 +73,6 @@
                     </div>
                     <div class="card-footer text-body-secondary">
                         <a href="{% url 'processos' %}" class="btn btn-info btn-sm mx-1">MAIS INFORMAÇÕES</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="container"><!-- Faturamento -->
-
-        <div class="row mt-5">
-
-            <div class="col-sm-12">
-                <div class="card text-center">
-                    <div class="card-header h3 bg-secondary text-white">
-                        Faturamento
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'faturamento' %}" class="btn btn-primary btn-sm mx-1">HONORARIOS</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'faturamento' %}" class="btn btn-primary btn-sm mx-1">SDAs</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'faturamento' %}" class="btn btn-primary btn-sm mx-1">OUTROS</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'faturamento' %}" class="btn btn-primary btn-sm mx-1">OUTROS</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-body-secondary">
-                        <a href="{% url 'faturamento' %}" class="btn btn-info btn-sm mx-1">MAIS INFORMAÇÕES</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="container"><!-- Suporte -->
-
-        <div class="row mt-5">
-
-            <div class="col-sm-12">
-                <div class="card text-center">
-                    <div class="card-header h3 bg-secondary text-white">
-                        Suporte
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'suporte' %}" class="btn btn-primary btn-sm mx-1">EMPRESAS</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'suporte' %}" class="btn btn-primary btn-sm mx-1">USUARIOS</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'importardados' %}" class="btn btn-primary btn-sm mx-1">IMPORTAR DADOS</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mb-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'exportardados' %}" class="btn btn-primary btn-sm mx-1">EXPORTAR DADOS</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-body-secondary">
-                        <a href="{% url 'suporte' %}" class="btn btn-info btn-sm mx-1">MAIS INFORMAÇÕES</a>
                     </div>
                 </div>
             </div>

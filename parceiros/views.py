@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.views import View
 from .models import (Teste1Categoria, Teste1Cliente, Teste1Grupo)
 from .forms import (ClienteForm, CategoriaForm, GrupoForm)
 from django.contrib import messages
+from django.contrib.messages import constants
 from django.db.models import Q
 from django.core.paginator import (Paginator,
                                    EmptyPage,
@@ -285,12 +287,12 @@ class CategoriaView(View):
             nome = request.POST.get('nome')
             status = 'A'
 
-            Teste1Categoria.objects.create(
+            nova_categoria = Teste1Categoria.objects.create(
                 nome=nome,
                 status=status
             )
 
-            msg = f'Categoria {nome} Incluída com Sucesso !'
+            msg = f'{nova_categoria.id} - {nome}!'
             messages.success(request, msg)
             return redirect('categorias')
 

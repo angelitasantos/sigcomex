@@ -7,7 +7,6 @@
 
     <h2 class="text-center mb-3">Listagem de Categorias</h2>
     {% include 'clientes/_breadcrumb_clientes.html' %}
-    {% include '_messages.html' %}
 
     <button data-bs-toggle="modal" data-bs-target="#createModal" class="btn btn-sm btn-primary btn-sm mb-3">CADASTRAR NOVA CATEGORIA</button>
 
@@ -142,5 +141,35 @@
     <div class="mt-5"></div>
     {% include 'clientes/_breadcrumb_clientes.html' %}
 
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">Sucesso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    {% for message in messages %}
+                        <p>Categoria Incluída Código: <span class="btn btn-sm btn-success">{{ message }}</span></p>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'processos_comex' %}" class="btn btn-sm btn-warning">IR PARA TELA PROCESSOS</a>
+                    <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">FICAR NA TELA CLIENTES</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        {% if messages %}
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        {% endif %}
+    });
+</script>
 {% endblock %}

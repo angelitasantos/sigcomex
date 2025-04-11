@@ -1,4 +1,5 @@
 from django.urls import path
+from . import views
 from .views import (ProcessosTemplateView, ProcessoComexView,
                     ProcessoServicoView, ProcessoNextBHView,
                     ProcessoNextSPView, ProcessoLeanView)
@@ -15,4 +16,7 @@ urlpatterns = [
           ProcessoNextSPView.as_view(), name='processos_nextsp'),
      path('processoslean/',
           ProcessoLeanView.as_view(), name='processos_lean'),
+
+     path('view/<int:id>', views.todo_view, name='todo_view'),
+     path('update/<int:id>', views.todo_update, name='todo_update'),
 ]
