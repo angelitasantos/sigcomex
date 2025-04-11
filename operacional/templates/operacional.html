@@ -5,8 +5,7 @@
 {% block body %}
 <main class="container p-4 shadow-lg p-3 mb-5 bg-white rounded my-5">
 
-    <h2 class="text-center mb-3">Faturamento</h2>
-    {% include 'faturamento/_breadcrumb_faturamento.html' %}
+    <h2 class="text-center mb-3">Operacional</h2>
 
     <section class="container mb-5"><!-- Faturamento -->
 
@@ -14,49 +13,57 @@
 
             <div class="col-sm-12">
                 <div class="card text-center">
+                    
                     <div class="card-body">
                         <div class="row mb-3">
+
                             <div class="col-lg-3 mb-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Special title treatment</h5>
                                         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'honorarios' %}" class="btn btn-primary btn-sm mx-1">HONORARIOS</a>
+                                        <a href="{% url 'operacional' %}" class="btn btn-primary btn-sm mx-1">OPERACIONAL</a>
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="col-lg-3 mb-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Special title treatment</h5>
                                         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'tipos_servicos' %}" class="btn btn-primary btn-sm mx-1">TIPOS SERVIÇOS</a>
+                                        <a href="{% url 'operacional' %}" class="btn btn-primary btn-sm mx-1">OPERACIONAL</a>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-3 mb-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Special title treatment</h5>
                                         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'sdas' %}" class="btn btn-primary btn-sm mx-1">SDAs</a>
+                                        <a href="{% url 'operacional' %}" class="btn btn-primary btn-sm mx-1">OPERACIONAL</a>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-3 mb-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Special title treatment</h5>
                                         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="{% url 'outros' %}" class="btn btn-primary btn-sm mx-1">OUTROS</a>
+                                        <a href="{% url 'operacional' %}" class="btn btn-primary btn-sm mx-1">OPERACIONAL</a>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="card-footer text-body-secondary">
                         <a href="{% url 'faturamento' %}" class="btn btn-info btn-sm mx-1">MAIS INFORMAÇÕES</a>
                     </div>
+
                 </div>
             </div>
 
@@ -65,7 +72,6 @@
     </section>
 
     <div class="mt-5"></div>
-    {% include 'faturamento/_breadcrumb_faturamento.html' %}
 
 </main>
 {% endblock %}

@@ -1,13 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
 from django.views.generic.base import TemplateView
-from django.contrib import messages
-from django.db.models import Q
-import pandas as pd
-from django.core.paginator import (Paginator,
-                                   EmptyPage,
-                                   PageNotAnInteger,
-                                   )
 
 
 class HomepageTemplateView(TemplateView):
@@ -20,7 +11,7 @@ class HomepageTemplateView(TemplateView):
 
 
 class OperacionalTemplateView(TemplateView):
-    template_name = 'operacional/operacional.html'
+    template_name = 'operacional.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

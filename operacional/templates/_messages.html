@@ -1,7 +1,11 @@
 {% if messages %}
+
     {% for message in messages %}
     <section class="mb-3 alert alert-success alert-sm text-center">
+
         {{message}}
+        
     </section>
     {% endfor %}
+
 {% endif %}

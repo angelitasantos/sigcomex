@@ -4,11 +4,12 @@
         <a class="navbar-brand" href="{% url 'homepage' %}">GRUPO PLENO</a>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alternar navegação">
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alternar navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
     
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" 
@@ -54,9 +55,11 @@
                         <li><a class="dropdown-item" href="{% url 'usuarios' %}">USUARIOS</a></li>
                         <li><a class="dropdown-item" href="{% url 'importardados' %}">IMPORTAR DADOS</a></li>
                         <li><a class="dropdown-item" href="{% url 'exportardados' %}">EXPORTAR DADOS</a></li>
+                        <li><a class="dropdown-item" href="{% url 'operacional' %}">OPERACIONAL</a></li>
                     </ul>
                 </li>
             </ul>
+
         </div>
     </div>
   </nav>
