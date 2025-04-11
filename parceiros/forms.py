@@ -12,7 +12,8 @@ class CategoriaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update(
-                {'class': 'form-control form-control-sm', 'autocomplete': 'off'})
+                {'class': 'form-control form-control-sm',
+                 'autocomplete': 'off'})
 
 
 class GrupoForm(forms.ModelForm):
@@ -25,7 +26,8 @@ class GrupoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update(
-                {'class': 'form-control form-control-sm', 'autocomplete': 'off'})
+                {'class': 'form-control form-control-sm',
+                 'autocomplete': 'off'})
 
 
 class ClienteForm(forms.ModelForm):
